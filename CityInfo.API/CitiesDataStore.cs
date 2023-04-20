@@ -2,6 +2,9 @@
 
 namespace CityInfo.API
 {
+    /// <summary>
+    /// Deprecated in-memory test data
+    /// </summary>
     public class CitiesDataStore
     {
         public List<CityDto> Cities { get; set; }

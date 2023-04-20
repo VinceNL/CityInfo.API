@@ -1,0 +1,189 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CityInfo.API</name>
+    </assembly>
+    <members>
+        <member name="T:CityInfo.API.CitiesDataStore">
+            <summary>
+            Deprecated in-memory test data
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Controllers.AuthenticationController">
+            <summary>
+            Provides an API endpoint for authentication and authorization token generation.
+            </summary>
+        </member>
+        <member name="M:CityInfo.API.Controllers.AuthenticationController.#ctor(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            Initializes a new instance of the AuthenticationController with the specified IConfiguration.
+            </summary>
+            <param name="configuration">The configuration to access app settings.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the IConfiguration is null.</exception>
+        </member>
+        <member name="T:CityInfo.API.Controllers.AuthenticationController.AuthenticationRequestBody">
+            <summary>
+            Represents the request body for authentication.
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Controllers.AuthenticationController.CityInfoUser">
+            <summary>
+            Represents a user with their authorization claim data.
+            </summary>
+        </member>
+        <member name="M:CityInfo.API.Controllers.AuthenticationController.Authenticate(CityInfo.API.Controllers.AuthenticationController.AuthenticationRequestBody)">
+            <summary>
+            Generates a Bearer authentication token for the specified user credentials.
+            </summary>
+            <param name="request">The request containing the user credentials.</param>
+            <returns>A Bearer token string if the credentials are valid; otherwise, an Unauthorized response.</returns>
+        </member>
+        <member name="M:CityInfo.API.Controllers.AuthenticationController.ValidateUserCredentials(System.String,System.String)">
+            <summary>
+            Validates the user credentials and returns a CityInfoUser object if they are valid.
+            </summary>
+            <param name="userName">The user name to validate.</param>
+            <param name="password">The password to validate.</param>
+            <returns>A CityInfoUser object if the credentials are valid; otherwise, null.</returns>
+        </member>
+        <member name="T:CityInfo.API.Controllers.CitiesController">
+            <summary>
+            Handles city-related operations and associated points of interest.
+            </summary>
+        </member>
+        <member name="M:CityInfo.API.Controllers.CitiesController.#ctor(CityInfo.API.Services.ICityInfoRepository,AutoMapper.IMapper)">
+            <summary>
+            Initializes a new instance of the CitiesController with the specified ICityInfoRepository and IMapper.
+            </summary>
+            <param name="cityInfoRepository">The repository for city data access.</param>
+            <param name="mapper">The mapper for object-to-object mapping.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when either ICityInfoRepository or IMapper is null.</exception>ception>
+        </member>
+        <member name="M:CityInfo.API.Controllers.CitiesController.GetCities(System.String,System.String,System.Int32,System.Int32)">
+            <summary>
+            Retrieves a collection of cities with their points of interest based on search criteria.
+            </summary>
+            <param name="name">Optional name filter for cities.</param>
+            <param name="searchQuery">Optional search query for city descriptions.</param>
+            <param name="pageNumber">The page number for pagination.</param>
+            <param name="pageSize">The number of items per page for pagination.</param>
+            <returns>A list of CityDto objects.</returns>
+        </member>
+        <member name="M:CityInfo.API.Controllers.CitiesController.GetCity(System.Int32,System.Boolean)">
+            <summary>
+            Retrieves a city by its ID.
+            </summary>
+            <param name="id">The ID of the city to retrieve.</param>
+            <param name="includePointsOfInterest">Whether or not to include the city's points of interest.</param>
+            <returns>An IActionResult containing the requested city data.</returns>
+        </member>
+        <member name="T:CityInfo.API.Controllers.FilesController">
+            <summary>
+            Handles API endpoints related to testing file operations, such as retrieving files.
+            </summary>
+        </member>
+        <member name="M:CityInfo.API.Controllers.FilesController.#ctor(Microsoft.AspNetCore.StaticFiles.FileExtensionContentTypeProvider)">
+            <summary>
+            Initialize a new instance of FilesController with the required services
+            </summary>
+            <param name="fileExtensionContentTypeProvider"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CityInfo.API.Controllers.FilesController.GetFile(System.String)">
+            <summary>
+            Retrieves a test file based on the provided fileId.
+            </summary>
+            <param name="fileId">The ID of the file to retrieve</param>
+            <returns>The requested file as an ActionResult</returns>
+        </member>
+        <member name="T:CityInfo.API.Controllers.PointsOfInterestController">
+            <summary>
+            Handles API endpoints related to points of interest in cities, including retrieval, creation, updating, and deletion of points of interest.
+            </summary>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.#ctor(Microsoft.Extensions.Logging.ILogger{CityInfo.API.Controllers.PointsOfInterestController},CityInfo.API.Services.IMailService,AutoMapper.IMapper,CityInfo.API.Services.ICityInfoRepository)">
+            <summary>
+            Initialize a new instance of PointsOfInterestController with the required services
+            </summary>
+            <param name="logger"></param>
+            <param name="mailService"></param>
+            <param name="mapper"></param>
+            <param name="cityInfoRepository"></param>
+            <exception cref="T:System.ArgumentNullException"></exception>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.GetPointsOfInterest(System.Int32)">
+            <summary>
+            Retrieves all points of interest for a specified city.
+            </summary>
+            <param name="cityId">The ID of the city for which to retrieve points of interest</param>
+            <returns>A list of points of interest for the specified city</returns>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.GetPointsOfInterest(System.Int32,System.Int32)">
+            <summary>
+            Retrieves a specific point of interest within a specified city.
+            </summary>
+            <param name="cityId">The ID of the city containing the point of interest</param>
+            <param name="pointOfInterestId">The ID of the point of interest to retrieve</param>
+            <returns>The requested point of interest for the specified city</returns>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.CreatePointOfInterest(System.Int32,CityInfo.API.Models.PointOfInterestForCreationDto)">
+            <summary>
+            Creates a new point of interest for a specified city.
+            </summary>
+            <param name="cityId">The ID of the city in which to create the new point of interest</param>
+            <param name="pointOfInterest">The data for the point of interest to be created</param>
+            <returns>The created point of interest with its assigned ID</returns>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.UpdatePointOfInterest(System.Int32,System.Int32,CityInfo.API.Models.PointOfInterestForUpdateDto)">
+            <summary>
+            Updates a specific point of interest within a specified city using the provided data.
+            </summary>
+            <param name="cityId">The ID of the city containing the point of interest to update</param>
+            <param name="pointOfInterestId">The ID of the point of interest to update</param>
+            <param name="pointOfInterest">The updated data for the point of interest</param>
+            <returns>An ActionResult indicating the success or failure of the operation</returns>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.PartiallyUpdatePointOfInterest(System.Int32,System.Int32,Microsoft.AspNetCore.JsonPatch.JsonPatchDocument{CityInfo.API.Models.PointOfInterestForUpdateDto})">
+            <summary>
+            Partially updates a specific point of interest within a specified city using the provided JSON patch document.
+            </summary>
+            <param name="cityId">The ID of the city containing the point of interest to partially update</param>
+            <param name="pointOfInterestId">The ID of the point of interest to partially update</param>
+            <param name="patchDocument">The JSON patch document containing the changes to apply to the point of interest</param>
+            <returns>An ActionResult indicating the success or failure of the operation</returns>
+        </member>
+        <member name="M:CityInfo.API.Controllers.PointsOfInterestController.DeletePointOfInterest(System.Int32,System.Int32)">
+            <summary>
+            Deletes a specific point of interest within a specified city.
+            </summary>
+            <param name="cityId">The ID of the city containing the point of interest to delete</param>
+            <param name="pointOfInterestId">The ID of the point of interest to delete</param>
+            <returns>An ActionResult indicating the success or failure of the operation</returns>
+        </member>
+        <member name="T:CityInfo.API.Models.CityDto">
+            <summary>
+            A DTO for a city including points of interest
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Models.CityWithoutPointsOfInterestDto">
+            <summary>
+            A DTO for a city without points of interest
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Models.PointOfInterestDto">
+            <summary>
+            A DTO for a point of interest
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Models.PointOfInterestForCreationDto">
+            <summary>
+            A DTO for creating a new Point of interest
+            </summary>
+        </member>
+        <member name="T:CityInfo.API.Models.PointOfInterestForUpdateDto">
+            <summary>
+            A DTO for a updating an existing point of interest
+            </summary>
+        </member>
+    </members>
+</doc>

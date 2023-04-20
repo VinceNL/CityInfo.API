@@ -6,24 +6,39 @@ using System.Text;
 
 namespace CityInfo.API.Controllers
 {
+    /// <summary>
+    /// Provides an API endpoint for authentication and authorization token generation.
+    /// </summary>
     [ApiController]
     [Route("api/authentication")]
+    [Produces("application/json")]
     public class AuthenticationController : ControllerBase
     {
         private readonly IConfiguration _configuration;
 
+        /// <summary>
+        /// Initializes a new instance of the AuthenticationController with the specified IConfiguration.
+        /// </summary>
+        /// <param name="configuration">The configuration to access app settings.</param>
+        /// <exception cref="ArgumentNullException">Thrown when the IConfiguration is null.</exception>
         public AuthenticationController(IConfiguration configuration)
         {
             _configuration = configuration ??
                 throw new ArgumentNullException(nameof(configuration));
         }
 
+        /// <summary>
+        /// Represents the request body for authentication.
+        /// </summary>
         public class AuthenticationRequestBody
         {
             public string? UserName { get; set; }
             public string? Password { get; set; }
         }
 
+        /// <summary>
+        /// Represents a user with their authorization claim data.
+        /// </summary>
         public class CityInfoUser
         {
             public CityInfoUser(
@@ -47,7 +62,15 @@ namespace CityInfo.API.Controllers
             public string City { get; set; }
         }
 
+        /// <summary>
+        /// Generates a Bearer authentication token for the specified user credentials.
+        /// </summary>
+        /// <param name="request">The request containing the user credentials.</param>
+        /// <returns>A Bearer token string if the credentials are valid; otherwise, an Unauthorized response.</returns>
         [HttpPost("authenticate")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         public ActionResult<string> Authenticate(
             AuthenticationRequestBody request)
         {
@@ -60,7 +83,7 @@ namespace CityInfo.API.Controllers
                 return Unauthorized();
             }
 
-            // create a token
+            // Create a token
             var securityKey = new SymmetricSecurityKey(
                 Encoding.ASCII.GetBytes(_configuration["Authentication:SecretForKey"]));
             var signingCredentials = new SigningCredentials(
@@ -88,9 +111,15 @@ namespace CityInfo.API.Controllers
             return Ok(tokenToReturn);
         }
 
+        /// <summary>
+        /// Validates the user credentials and returns a CityInfoUser object if they are valid.
+        /// </summary>
+        /// <param name="userName">The user name to validate.</param>
+        /// <param name="password">The password to validate.</param>
+        /// <returns>A CityInfoUser object if the credentials are valid; otherwise, null.</returns>
         private CityInfoUser ValidateUserCredentials(string? userName, string? password)
         {
-            // For demo purposes we do not valdate against database and assume valid credentials
+            // For demo purposes, we do not validate against a database and assume valid credentials
 
             return new CityInfoUser(
                 1,

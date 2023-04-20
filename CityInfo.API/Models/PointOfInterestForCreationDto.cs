@@ -2,6 +2,9 @@
 
 namespace CityInfo.API.Models
 {
+    /// <summary>
+    /// A DTO for creating a new Point of interest
+    /// </summary>
     public class PointOfInterestForCreationDto
     {
         [Required(ErrorMessage = "A valid name value should be provided")]

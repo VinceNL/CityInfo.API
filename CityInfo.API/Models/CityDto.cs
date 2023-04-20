@@ -1,5 +1,8 @@
 ﻿namespace CityInfo.API.Models
 {
+    /// <summary>
+    /// A DTO for a city including points of interest
+    /// </summary>
     public class CityDto
     {
         public int Id { get; set; }
@@ -13,6 +16,7 @@
                 return PointsOfInterest.Count;
             }
         }
+
 
         public ICollection<PointOfInterestDto> PointsOfInterest { get; set; }
         = new List<PointOfInterestDto>();

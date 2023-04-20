@@ -32,7 +32,7 @@ namespace CityInfo.API.Services
             string? name, string? searchQuery, int pageNumber, int pageSize)
         {
             // collection to start from
-            var collection = _context.Cities as IQueryable<City>;
+            var collection = _context.Cities.Include(c => c.PointsOfInterest) as IQueryable<City>;
 
             if (!string.IsNullOrWhiteSpace(name))
             {
